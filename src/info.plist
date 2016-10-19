@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>net.deanishe.alfred.gifs</string>
+	<key>connections</key>
+	<dict>
+		<key>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>766B905D-7A5B-4887-B724-ED6EF5C4889F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>A3C22E3F-51CC-49FA-9E41-27FE3C5E57C4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A3C22E3F-51CC-49FA-9E41-27FE3C5E57C4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BD20C16C-8A8E-41B2-A86E-B30D64E232C3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BD20C16C-8A8E-41B2-A86E-B30D64E232C3</key>
+		<array/>
+		<key>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</key>
+		<array/>
+	</dict>
+	<key>createdby</key>
+	<string>Dean Jackson</string>
+	<key>description</key>
+	<string>Browse GIFs</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>GIFs</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>gif</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>/usr/bin/python gifs.py "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search your GIFs</string>
+				<key>title</key>
+				<string>Say it with GIFs</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>766B905D-7A5B-4887-B724-ED6EF5C4889F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>browse</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>BD20C16C-8A8E-41B2-A86E-B30D64E232C3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>browse</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>A3C22E3F-51CC-49FA-9E41-27FE3C5E57C4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Say it with GIFs
+================
+
+Search your hoard of GIFs, choose an image and copy its URL
+
+Configuration
+-------------
+
+Over to the right there ------&gt;
+
+1. Set GIF_DIR to the path to your local GIF hoard.
+2. Set GIF_URL to the URL that corresponds to GIF_DIR in your Dropbox or on your webserver.
+
+Usage
+-----</string>
+	<key>uidata</key>
+	<dict>
+		<key>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>100</integer>
+		</dict>
+		<key>766B905D-7A5B-4887-B724-ED6EF5C4889F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>70</integer>
+		</dict>
+		<key>A3C22E3F-51CC-49FA-9E41-27FE3C5E57C4</key>
+		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>240</integer>
+		</dict>
+		<key>BD20C16C-8A8E-41B2-A86E-B30D64E232C3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>210</integer>
+		</dict>
+		<key>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>70</integer>
+		</dict>
+	</dict>
+	<key>variables</key>
+	<dict>
+		<key>GIF_DIR</key>
+		<string>~/Dropbox/Public/gifs</string>
+		<key>GIF_URL</key>
+		<string>https://dl.dropboxusercontent.com/u/10123941/gifs</string>
+	</dict>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
