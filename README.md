@@ -1,13 +1,15 @@
 
-Say it with GIFs (and Alfred)
-=============================
+Say it with GIFs
+================
 
 
-A slightly more featureful version of [the GIF workflow from Destroy Today][orig].
+A slightly more featureful version of [the GIF workflow from Destroy Today][orig] for [Alfred 3][alfred].
 
 
 Requirements
 ------------
+
+This workflow is only compatible with Alfred 3+.
 
 You must have [GraphicsMagick][gm] installed at `/usr/local/bin/gm` to use this workflow (e.g. via [Homebrew][brew]).
 
@@ -38,9 +40,10 @@ This workflow is released under the [MIT licence][mit].
 
 It depends on [GraphicsMagick][gm] and the [Alfred-Workflow][aw] library, both also released under the [MIT licence][mit].
 
-The icon if from the [Destroy Today][orig] workflow on which it's based.
+The icon is from the [Destroy Today][orig] workflow on which it's based.
 
 
+[alfred]: http://www.alfredapp.com/
 [brew]: http://brew.sh
 [gm]: http://www.graphicsmagick.org
 [mit]: https://opensource.org/licenses/MIT
