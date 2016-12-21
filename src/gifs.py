@@ -92,7 +92,8 @@ def main(wf):
                          'Copy URL to clipboard',
                          arg=gif.url,
                          quicklookurl=gif.url,
-                         icon=gif.icon)
+                         icon=gif.icon,
+                         valid=True)
 
         # Alternate actions
         mod = it.add_modifier('cmd', 'Open in Browser', arg=gif.url)
