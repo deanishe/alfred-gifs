@@ -19,11 +19,34 @@
 				<false/>
 			</dict>
 		</array>
+		<key>28BA5D86-8FE3-40AF-B312-956C859F68FC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>766B905D-7A5B-4887-B724-ED6EF5C4889F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>766B905D-7A5B-4887-B724-ED6EF5C4889F</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>AFBDA614-AE90-4E6A-AAF3-CEF758D90F0A</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -55,6 +78,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>AFBDA614-AE90-4E6A-AAF3-CEF758D90F0A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7917E4D1-B84D-487E-AD73-220D2A83EE1E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>BD20C16C-8A8E-41B2-A86E-B30D64E232C3</key>
 		<array/>
 		<key>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</key>
@@ -73,8 +109,46 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>focusedappvariable</key>
+				<true/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>keyword</key>
+				<string>xxgif</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.snippet</string>
+			<key>uid</key>
+			<string>28BA5D86-8FE3-40AF-B312-956C859F68FC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -116,8 +190,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>copy</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>autopaste</key>
-				<false/>
+				<true/>
 				<key>clipboardtext</key>
 				<string>{query}</string>
 				<key>transient</key>
@@ -126,7 +219,7 @@
 			<key>type</key>
 			<string>alfred.workflow.output.clipboard</string>
 			<key>uid</key>
-			<string>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</string>
+			<string>7917E4D1-B84D-487E-AD73-220D2A83EE1E</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -138,14 +231,14 @@
 				<key>matchcasesensitive</key>
 				<true/>
 				<key>matchmode</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>matchstring</key>
-				<string>browse</string>
+				<string>paste</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</string>
+			<string>AFBDA614-AE90-4E6A-AAF3-CEF758D90F0A</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -202,44 +295,82 @@ Over to the right there ------&gt;
 1. Set GIF_DIR to the path to your local GIF hoard.
 2. Set GIF_URL to the URL that corresponds to GIF_DIR in your Dropbox or on your webserver.
 
+If PREVIEW_LOCAL is set to something other than 0 or empty, Quicklook in Alfred (hold SHIFT or CMD+Y) will show the local file, not the remote URL.
+
 Usage
------</string>
+-----
+
+### Keyword
+
+* gif [&lt;query&gt;] — Search your hoard of GIFs
+    * RETURN/CMD+N — Copy GIF URL to clipboard
+    * SHIFT+RETURN — Paste GIF URL to active app
+    * CMD+RETURN — Open GIF URL in your browser
+    * OPT+RETURN — Copy GIF as BB Code image
+    * CTRL+RETURN — Copy GIF as Markdown image
+
+### Snippet Trigger
+
+**Don't forget to assign a trigger!**
+
+Search your GIF hoard and paste the URL into the active app. Actions as above, but all "Copy" actions are now "Paste".</string>
 	<key>uidata</key>
 	<dict>
 		<key>1B6EA932-DBE7-43D0-AF31-8F9EE9760AE7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>490</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>90</integer>
+		</dict>
+		<key>28BA5D86-8FE3-40AF-B312-956C859F68FC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>60</integer>
 		</dict>
 		<key>766B905D-7A5B-4887-B724-ED6EF5C4889F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>80</integer>
+			<integer>230</integer>
 			<key>ypos</key>
-			<integer>70</integer>
+			<integer>60</integer>
+		</dict>
+		<key>7917E4D1-B84D-487E-AD73-220D2A83EE1E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>210</integer>
 		</dict>
 		<key>A3C22E3F-51CC-49FA-9E41-27FE3C5E57C4</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>390</integer>
+		</dict>
+		<key>AFBDA614-AE90-4E6A-AAF3-CEF758D90F0A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
 			<key>ypos</key>
 			<integer>240</integer>
 		</dict>
 		<key>BD20C16C-8A8E-41B2-A86E-B30D64E232C3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>610</integer>
 			<key>ypos</key>
-			<integer>210</integer>
+			<integer>360</integer>
 		</dict>
 		<key>BD6D58E6-C6D8-4226-96FC-AA0B55F8C53B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>610</integer>
 			<key>ypos</key>
-			<integer>70</integer>
+			<integer>60</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -248,9 +379,11 @@ Usage
 		<string>~/Dropbox/Public/gifs</string>
 		<key>GIF_URL</key>
 		<string>https://dl.dropboxusercontent.com/u/10123941/gifs</string>
+		<key>PREVIEW_LOCAL</key>
+		<string>1</string>
 	</dict>
 	<key>version</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>

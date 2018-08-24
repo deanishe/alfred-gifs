@@ -13,6 +13,7 @@
 from __future__ import print_function, unicode_literals, absolute_import
 
 import logging
+from glob import glob
 import hashlib
 import os
 import subprocess
@@ -35,13 +36,14 @@ class Thumbs(object):
             cachedir (str): Path to directory to save thumbnails in.
 
         """
-
         self._cachedir = os.path.abspath(cachedir)
-        self._queue_path = os.path.join(self._cachedir, 'thumbnails.txt')
+        self._img_dir = os.path.join(self._cachedir, 'img')
+        self._queue_dir = os.path.join(self._cachedir, 'jobs')
         self._queue = []
 
         try:
-            os.makedirs(self._cachedir)
+            os.makedirs(self._img_dir)
+            os.makedirs(self._queue_dir)
         except (IOError, OSError):
             pass
 
@@ -51,8 +53,8 @@ class Thumbs(object):
 
         Returns:
             str: Directory path.
-        """
 
+        """
         return self._cachedir
 
     def thumbnail_path(self, img_path):
@@ -63,16 +65,33 @@ class Thumbs(object):
 
         Returns:
             str: Path to thumbnail.
+
+        """
+        h = self.job_name(img_path)
+        dirpath = os.path.join(self._img_dir, h[:2], h[2:4])
+        return os.path.join(dirpath, h + '.png')
+
+    def job_path(self, img_path):
+        """Return job file path for image."""
+        h = self.job_name(img_path)
+        return os.path.join(self._queue_dir, h + '.txt')
+
+    def job_name(self, img_path):
+        """Return job name for image.
+
+        Args:
+            img_path (str): Path to image file.
+
+        Returns:
+            str: Name of job file.
+
         """
         if isinstance(img_path, unicode):
             img_path = img_path.encode('utf-8')
         elif not isinstance(img_path, str):
             img_path = str(img_path)
 
-        h = hashlib.md5(img_path).hexdigest()
-        dirpath = os.path.join(self.cachedir, h[:2], h[2:4])
-        thumb_path = os.path.join(dirpath, u'{}.png'.format(h))
-        return thumb_path
+        return hashlib.sha256(img_path).hexdigest()
 
     def thumbnail(self, img_path):
         """Return resized thumbnail for `img_path`.
@@ -82,8 +101,8 @@ class Thumbs(object):
 
         Returns:
             str: Path to thumbnail image.
-        """
 
+        """
         thumb_path = self.thumbnail_path(img_path)
 
         if os.path.exists(thumb_path):
@@ -97,6 +116,7 @@ class Thumbs(object):
 
         Args:
             img_path (str): Path to image file.
+
         """
         self._queue.append(img_path)
 
@@ -105,58 +125,57 @@ class Thumbs(object):
         if not self._queue:
             return
 
-        text = []
         for p in self._queue:
             if isinstance(p, unicode):
                 p = p.encode('utf-8')
-            text.append(p)
-            log.debug('Queued for thumbnail generation : %r', p)
 
-        text = b'\n'.join(text)
-        with LockFile(self._queue_path):
-            with atomic_writer(self._queue_path, 'ab') as fp:
-                fp.write(b'{}\n'.format(text))
+            if os.path.exists(self.thumbnail_path(p)):
+                log.debug('thumb already exists: %r', p)
+                continue
+
+            job_path = self.job_path(p)
+            if os.path.exists(job_path):
+                # log.debug('job already queued: %r', p)
+                continue
+
+            with open(job_path, 'wb') as fp:
+                fp.write(p)
+
+            log.debug('queued for thumbnail generation : %r', p)
 
         self._queue = []
 
     @property
-    def has_queue(self):
-        """Whether any files are queued for thumbnail generation.
+    def queue_size(self):
+        """Return length of queue.
 
         Returns:
-            bool: `True` if there's a queue.
+            int: Number of thumbnails queued for generation.
+
         """
-        return (os.path.exists(self._queue_path) and
-                os.path.getsize(self._queue_path) > 0)
+        return len(glob(os.path.join(self._queue_dir, '*.txt')))
 
     def process_queue(self):
         """Generate thumbnails for queued files."""
-        if not self.has_queue:
-            log.debug('Thumbnail queue empty.')
-            return
+        queue = glob(os.path.join(self._queue_dir, '*.txt'))
 
-        queue = []
-        with LockFile(self._queue_path):
-            with open(self._queue_path) as fp:
-                for line in fp:
-                    line = line.strip()
-                    if not line:
-                        continue
-                    if not os.path.exists(line):
-                        log.debug('File does not exist : %r', line)
-                        continue
-                    queue.append(line)
-            # Clear queue file
-            with atomic_writer(self._queue_path, 'wb') as fp:
-                fp.write('')
+        success = True
+        for i, job_path in enumerate(queue):
+            with open(job_path) as fp:
+                img_path = fp.read().strip()
 
-        succeeded = True
-        for i, img_path in enumerate(queue):
-            log.debug('Generating thumbnail {}/{} ...', i + 1, len(queue))
+            if not os.path.exists(img_path):
+                log.warning('queued image does not exist: %r', img_path)
+                continue
+
+            log.debug('[%d/%d] generating thumbnail for %r ...',
+                      i + 1, len(queue), img_path)
             if not self.generate_thumbnail(img_path):
-                succeeded = False
+                success = False
+            else:
+                os.unlink(job_path)
 
-        return succeeded
+        return success
 
     def generate_thumbnail(self, img_path):
         """Generate and save thumbnail for `img_path`.
@@ -166,8 +185,8 @@ class Thumbs(object):
 
         Returns:
             bool: `True` if generation succeeded, else `False`.
-        """
 
+        """
         thumb_path = self.thumbnail_path(img_path)
         dirpath = os.path.dirname(thumb_path)
         try:
@@ -191,7 +210,7 @@ class Thumbs(object):
             log.error('convert exited with %d : %s', retcode, img_path)
             return False
 
-        log.debug('Wrote thumbnail for `%s` to `%s`.', img_path, thumb_path)
+        log.debug('wrote thumbnail for %r to %r', img_path, thumb_path)
 
         return True
 
@@ -205,6 +224,7 @@ def main(wf):
     """
     t = Thumbs(wf.cachefile('thumbs'))
     t.process_queue()
+
 
 if __name__ == '__main__':
     wf = Workflow()
